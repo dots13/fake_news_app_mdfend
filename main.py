@@ -78,7 +78,7 @@ def main():
         # Display Filter results
 
         # Decision Making Agent
-        decision_result = decision_agent.run_decision_agent(news, context, result_pred_proba, alignment_label, times)
+        decision_result = decision_agent.run_decision_agent(news, context, (1-result_pred_proba), alignment_label, times)
 
         # Final decision display
         st.write("Decision Final", decision_result)  # Modification here
