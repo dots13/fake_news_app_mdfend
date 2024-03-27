@@ -41,17 +41,15 @@ def main():
 
     # Sample input for demonstration
     headline = st.text_input("Titular", "")
-    news = st.text_area("Cuerpo de la Noticia", "")
+    news_text = st.text_area("Cuerpo de la Noticia", "")
 
     headline = limit_tokens(headline)
-    news = limit_tokens(news)
-    print(news)
-
+    news = limit_tokens(news_text)
 
     if st.button('Process'):
-        lda_label = lda_model.predict_topic(news)
-        result_pred_proba = model.predict(news, lda_label)
-        st.write("ML model output", 100*result_pred_proba)
+        lda_label = lda_model.predict_topic(news_text)
+        result_pred_proba = model.predict(news_text, lda_label)
+        st.write(f"The news is Fake with probability: {100*result_pred_proba:.2f} %")
         class_result = class_agent.run_class_agent(headline=headline)
         st.write("Class result:", class_result)  # Modification here
         data = json.loads(class_result)
