@@ -5,11 +5,6 @@ import requests
 from token_controler import *
 
 
-
-#load_dotenv()
-
-
-
 def info_extraction(subject, api_key, length=100, min_search=20):
     if not api_key:
         raise ValueError("Google Search API key is required.")

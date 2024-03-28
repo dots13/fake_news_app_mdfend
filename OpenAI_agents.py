@@ -167,11 +167,7 @@ class InfoExtraction:
         }
 
         search_result = serpapi.search(params_dic)
-        #results = search_result.get_dict()
-        #organic_results = results["organic_results"]
         organic_results = search_result["organic_results"]
-
-        # Flatten all priority sources for secondary ranking
         all_priority_sources = {info['link'] for _, approaches in self.topic_priority_map.items() for _, info in
                                 approaches.items()}
         topic_linked_sources = [info['link'] for approach, info in self.topic_priority_map.get(topic, {}).items()]
@@ -210,9 +206,7 @@ class InfoExtraction:
 # Example usage:
 if __name__ == "__main__":
     open_ai_key = ""
-
     os.environ["OPENAI_API_KEY"] = open_ai_key
-
     client = OpenAI(temperature=0)
     class_agent = ClassAgent(client=client)
     headline = 'Head'

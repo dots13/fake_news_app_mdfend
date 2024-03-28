@@ -77,8 +77,6 @@ def main():
         filter_data = json.loads(filter_result)
         times = filter_data["times"]
 
-        # Display Filter results
-
         # Decision Making Agent
         decision_result = decision_agent.run_decision_agent(news, context, (1-result_pred_proba), alignment_label, times)
 
