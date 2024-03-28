@@ -34,6 +34,8 @@ class NewsClassifier:
         model = MDFEND(self.bert, self.domain_num)
         model.load_state_dict(torch.load(f=self.MODEL_SAVE_PATH, map_location=torch.device('cpu')))
         model.eval()
+        print('load model')
+        print(model.eval())
         return model
 
     def predict(self, text, domain=None):
@@ -41,9 +43,12 @@ class NewsClassifier:
             warnings.warn('The news domain was not identified. The model accuracy has been reduced.')
             domain = 0
         inputs = self.tokenizer(text)
-
+        print('inside MDFEND')
+        print(text)
+        print(inputs)
         with torch.no_grad():
             outputs = self.MDFEND_MODEL(inputs['token_id'], inputs['mask'], torch.tensor(domain))
-
+        print('outputs')
+        print(outputs.item())
         return outputs.item()
 
