@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoTokenizer
+from transformers import BertModel
 from faknow.data.process.text_process import TokenizerFromPreTrained
 from faknow.model.content_based.mdfend import MDFEND
 import warnings
@@ -45,8 +45,8 @@ class NewsClassifier:
             domain = 0
         inputs = self.tokenizer(text)
         st.write('inside MDFEND')
-        st.write(self.tokenizer.max_len)
-        st.write(self.tokenizer.bert)
+        st.write(self.tokenizer.tokenizer.max_len)
+        st.write(self.tokenizer.tokenizer.bert)
         st.write(text)
         st.write(inputs)
         with torch.no_grad():
