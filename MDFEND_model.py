@@ -44,15 +44,9 @@ class NewsClassifier:
             warnings.warn('The news domain was not identified. The model accuracy has been reduced.')
             domain = 0
         inputs = self.tokenizer(text)
-        st.write('inside MDFEND')
-        st.write(self.tokenizer.max_len)
-        st.write(self.tokenizer.bert)
-        st.write(self.tokenizer.tokenizer)
         st.write(text)
         st.write(inputs)
         with torch.no_grad():
             outputs = self.MDFEND_MODEL(inputs['token_id'], inputs['mask'], torch.tensor(domain))
-        st.write('outputs')
-        st.write(outputs.item())
         return outputs.item()
 
