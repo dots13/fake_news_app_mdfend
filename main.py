@@ -47,6 +47,8 @@ def main():
     news = limit_tokens(news_text)
 
     if st.button('Process'):
+        news_text = news_text.replace("\\r", " ")
+        news_text = news_text.replace("\\n", " ")
         lda_label = lda_model.predict_topic(news_text)
         result_pred_proba = model.predict(news_text, lda_label)
         st.write(news_text)
