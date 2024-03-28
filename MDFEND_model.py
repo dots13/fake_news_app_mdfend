@@ -45,8 +45,8 @@ class NewsClassifier:
             domain = 0
         inputs = self.tokenizer(text)
         st.write('inside MDFEND')
-        st.write(tokenizer.max_len)
-        st.write(tokenizer.bert)
+        st.write(self.tokenizer.max_len)
+        st.write(self.tokenizer.bert)
         st.write(text)
         st.write(inputs)
         with torch.no_grad():
