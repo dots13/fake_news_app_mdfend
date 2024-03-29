@@ -51,8 +51,6 @@ def main():
         news_text = news_text.replace("\\n", " ")
         lda_label = lda_model.predict_topic(news_text)
         result_pred_proba = model.predict(news_text, lda_label)
-        st.write(news_text)
-        st.write(f"LDA output: {lda_label}")
         st.write(f"The news is Fake with probability: {100*result_pred_proba:.2f} %")
         class_result = class_agent.run_class_agent(headline=headline)
         st.write("Class result:", class_result)  # Modification here
