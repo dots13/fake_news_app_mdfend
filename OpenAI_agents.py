@@ -1,7 +1,6 @@
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import OpenAI
-#from langchain.llms import OpenAI
 import json
 import serpapi
 import os
@@ -10,10 +9,10 @@ import os
 class FilterAgent:
     def __init__(self, client):
         self.client = client
-        filter_agent_template = """ You are an agent with the task of counting in how many entries of a context {context},
-                a text extract {headline} can be found identically and literally word by word.
-                You will review each entry and see if the extract {headline} can be found exactly the same within each entry,
-                not just similar semantically but word by word.
+        filter_agent_template = """ You are an agent with the task of counting in how many entries of a context 
+                {context}, a text extract {headline} can be found identically and literally word by word.
+                You will review each entry and see if the extract {headline} can be found exactly the same within each 
+                entry, not just similar semantically but word by word.
 
                 your job is to generate a JSON structure with the number of entries where this happens:
 
@@ -38,7 +37,8 @@ class ClassAgent:
         self.client = client
 
         class_agent_template = """ You are an agent with the task of analysing a headline {headline} .
-                you will identify the subject, the event, and the field the news belongs to either Politics, Economics, or Social.
+                you will identify the subject, the event, and the field the news belongs to either Politics, Economics, 
+                or Social.
                 you will provide a JSON Structure:
                   (
                   "subject": subject of the news,
@@ -62,17 +62,21 @@ class DecisionAgent:
     def __init__(self, client):
         self.client = client
         decision_agent_template = """you are information verification agent in 2024,
-                You will be presented with a piece of news {news} and information gathered from the internet {filtered_context}.
+                You will be presented with a piece of news {news} and information gathered from the internet 
+                {filtered_context}.
                 Your task is to evaluate whether the news is real or fake, based solely on:
 
-                - How the {news} corresponds to the information retrieved {filtered_context}, considering the reliability of the sources.
+                - How the {news} corresponds to the information retrieved {filtered_context}, considering the 
+                reliability of the sources.
                 - Probability of the news {probability} being real.
                 - Alignment of the headline and the news {alignment},Not aligment is a sign of fake news .
-                - Number of times the exact headline is found in other media outlets {times} which could indicate a misinformation campaign.
+                - Number of times the exact headline is found in other media outlets {times} which could indicate a 
+                misinformation campaign.
 
                 Based on these criteria provided in order of importance,
                 produced a reasoned argumentation whether the news is Fake or real.
-                You answer strictly as a single JSON string. Don't include any other verbose texts and don't include the markdown syntax anywhere.
+                You answer strictly as a single JSON string. Don't include any other verbose texts and don't include 
+                the markdown syntax anywhere.
 
                   (
                 "category": Fake or Real,
@@ -125,7 +129,8 @@ class HeadlineAgent:
         - news (str): The full text of the news article.
 
         Returns:
-        - A dictionary with the analysis results, including whether the headline is aligned with the news body and any relevant analysis details.
+        - A dictionary with the analysis results, including whether the headline is aligned with the news body and any
+        relevant analysis details.
         """
         try:
             output = self.llm_chain.run({'headline': headline, 'news': news})
@@ -133,74 +138,6 @@ class HeadlineAgent:
         except Exception as e:
             print(e)
             return {"error": "Error in headline alignment analysis layer"}
-
-
-class InfoExtraction:
-    def __init__(self, api_key=None):
-        self.serper_ai_key = api_key
-        # Define the mapping of topics to their prioritized sources
-        self.topic_priority_map = {
-            "Politics": {
-                "POLITICAL PARTIES": {"name": "ACCIÓN CIUDADANA", "link": "https://accion-ciudadana.org/"},
-                "TRANSPARENCY": {"name": "TRACODA", "link": "https://tracoda.info/"},
-                "ELECTIONS": {"name": "VOTANTE", "link": "https://twitter.com/somosvotante"},
-                "CORRUPTION": {"name": "ALAC", "link": "https://twitter.com/ALAC_SV"},
-            },
-            "Social": {
-                "GENDER": {"name": "ORMUSA", "link": "https://ormusa.org/"},
-                "VIOLENCE": {"name": "ASDEUH", "link": "https://asdehu.com/"},
-                "ENVIRONMENT": {"name": "ACUA", "link": "https://www.acua.org.sv/"},
-                "MIGRATION": {"name": "GMIES", "link": "https://gmies.org/"},
-            },
-            "Economy": {
-                "BUDGET": {"name": "FUNDE", "link": "https://funde.org/"},
-                "MACROECONOMY": {"name": "ICEFI", "link": "https://mail.icefi.org/etiquetas/el-salvador"},
-            }
-        }
-
-    def _fetch_summary(self, subject, event, topic, length, min_search):
-        # Fetch summary from the internet using the info_extraction function
-        params_dic = {
-            "engine": "google",
-            "q": subject + event,
-            "api_key": self.serper_ai_key
-        }
-
-        search_result = serpapi.search(params_dic)
-        organic_results = search_result["organic_results"]
-        all_priority_sources = {info['link'] for _, approaches in self.topic_priority_map.items() for _, info in
-                                approaches.items()}
-        topic_linked_sources = [info['link'] for approach, info in self.topic_priority_map.get(topic, {}).items()]
-
-        # Initialize summary list with rank
-        summary = []
-        for result in organic_results[:min_search]:
-            snippet = result['snippet']
-            source_url = result['link']
-            words = snippet.split()[:length]  # Select the first 'length' words
-            truncated_snippet = ' '.join(words)
-
-            # Rank determination
-            if source_url in topic_linked_sources:
-                rank = 1  # Highest priority: Directly linked to the topic
-            elif source_url in all_priority_sources:
-                rank = 2  # Secondary priority: In the priority map but not directly linked to the topic
-            else:
-                rank = 3  # Lowest priority: Not in the priority map
-
-            # Append the summary with metadata including rank
-            summary.append({
-                "snippet": truncated_snippet,
-                "source": source_url,
-                "rank": rank
-            })
-
-        # Sort the summary list by 'rank'
-        sorted_summary = sorted(summary, key=lambda x: x['rank'])
-        return sorted_summary
-
-    def extract_info(self, subject, event, topic, length=50, min_search=20):
-        return self._fetch_summary(subject, event, topic, length, min_search)
 
 
 # Example usage:

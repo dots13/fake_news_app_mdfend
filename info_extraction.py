@@ -1,6 +1,5 @@
 from serpapi import GoogleSearch
 import os
-#from dotenv import load_dotenv
 import requests
 from token_controler import *
 

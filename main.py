@@ -6,6 +6,7 @@ from OpenAI_agents import *
 from token_controler import limit_tokens
 from info_extraction import *
 
+
 @st.cache_resource
 def model_init(class_name):
     if class_name == 'lda':
@@ -33,7 +34,6 @@ def main():
     filter_agent = FilterAgent(client=client)
     decision_agent = DecisionAgent(client=client)
 
-    search_agent = InfoExtraction(serper_ai_key)
 
     # Streamlit UI Code
     st.title("Analisis de Veracidad de Noticias ")
@@ -57,7 +57,6 @@ def main():
         data = json.loads(class_result)
         subject = data["subject"]
         event = data["event"]
-        print(headline)
         # Info Extraction
         context = info_extraction(headline, serper_ai_key)
         st.write("Contexto-Fuentes utilizadas:", context)  # Modification here
@@ -66,7 +65,6 @@ def main():
         alignment_result = headline_agent.analyze_alignment(headline=headline, news=news)
         st.write("Alineamiento Titular-Noticia:", alignment_result)  # Modification here
         data_alignment = json.loads(alignment_result)
-        print(alignment_result)
         alignment_label = data_alignment["label"]
 
         # Misinformation Campaign Filter

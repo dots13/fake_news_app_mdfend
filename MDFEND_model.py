@@ -6,6 +6,7 @@ import warnings
 import os
 import gdown
 
+
 class NewsClassifier:
     def __init__(self):
         self.max_len = 250
@@ -44,4 +45,3 @@ class NewsClassifier:
         with torch.no_grad():
             outputs = self.MDFEND_MODEL(inputs['token_id'], inputs['mask'], torch.tensor(domain))
         return outputs.item()
-

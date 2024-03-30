@@ -23,9 +23,6 @@ class LDAModel:
         self.lda_model = joblib.load(model_path)
         self.dictionary = joblib.load(dictionary_path)
 
-        # self.stop_words = set(stopwords.words('english'))
-        # self.stop_words.update(string.punctuation)
-
     @staticmethod
     def preprocess_text(text):
         text = re.sub(r'[^a-zA-ZáéíóúüÁÉÍÓÚÜÑñ\s]', '', text)
