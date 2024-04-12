@@ -15,9 +15,10 @@ class NewsClassifier:
         self.domain_num = 11
 
         # Google Drive file ID for the model
-        file_id = '17u8fXwxm5JVWqEJwdcxzea2LhVl0KR5m'
+        file_id = '1G6ESi1uEfMjedpkTIp-DKZQo_RB0GUTO'
         model_path = 'models/model_10_experts_20_epoch_best.pth'
         # https://drive.google.com/file/d/17u8fXwxm5JVWqEJwdcxzea2LhVl0KR5m/view?usp=sharing
+        # https://drive.google.com/file/d/1G6ESi1uEfMjedpkTIp-DKZQo_RB0GUTO/view?usp=sharing
         self.MODEL_SAVE_PATH = self.download_from_gdrive(file_id, model_path)
         self.MDFEND_MODEL = self.load_model()
 
