@@ -9,7 +9,7 @@ import gdown
 
 class NewsClassifier:
     def __init__(self):
-        self.max_len = 250
+        self.max_len = 120
         self.bert = 'dccuchile/bert-base-spanish-wwm-cased'
         self.tokenizer = TokenizerFromPreTrained(self.max_len, self.bert)
         self.domain_num = 11
