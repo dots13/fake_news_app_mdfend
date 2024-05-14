@@ -40,10 +40,10 @@ def main():
     st.title("El Salvador")
 
     # Sample input for demonstration
-    #headline = st.text_input("Titular", "")
+    headline = st.text_input("Titular", "")
     news_text = st.text_area("Cuerpo de la Noticia", "")
 
-    #headline = limit_tokens(headline)
+    headline = limit_tokens(headline)
     news = limit_tokens(news_text)
 
     if st.button('Process'):
