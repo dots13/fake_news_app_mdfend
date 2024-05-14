@@ -27,12 +27,12 @@ def main():
     lda_model = model_init('lda')
     model = model_init('mdfend')
 
-    #client = OpenAI(temperature=0)
+    client = OpenAI(temperature=0)
     # Initialize agents
-    #class_agent = ClassAgent(client=client)
-    #headline_agent = HeadlineAgent(client=client)
-    #filter_agent = FilterAgent(client=client)
-    #decision_agent = DecisionAgent(client=client)
+    class_agent = ClassAgent(client=client)
+    headline_agent = HeadlineAgent(client=client)
+    filter_agent = FilterAgent(client=client)
+    decision_agent = DecisionAgent(client=client)
 
 
     # Streamlit UI Code
