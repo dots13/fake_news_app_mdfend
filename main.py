@@ -53,8 +53,8 @@ def main():
         result_pred_proba = model.predict(news_text, lda_label)
         #st.write(lda_label)
         st.write(f"The news is Fake with probability: {100*result_pred_proba:.2f} %")
+        headline = "Economy grows by 5% in the third quarter, exceeding expectations"
         class_result = class_agent.run_class_agent(headline=headline)
-        st.write(headline)
         st.write("Class result:", class_result)  # Modification here
         data = json.loads(class_result)
         subject = data["subject"]
