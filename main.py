@@ -53,32 +53,32 @@ def main():
         result_pred_proba = model.predict(news_text, lda_label)
         #st.write(lda_label)
         st.write(f"The news is Fake with probability: {100*result_pred_proba:.2f} %")
-        #class_result = class_agent.run_class_agent(headline=headline)
-        #st.write("Class result:", class_result)  # Modification here
-        #data = json.loads(class_result)
-        #subject = data["subject"]
-        #event = data["event"]
+        class_result = class_agent.run_class_agent(headline=headline)
+        st.write("Class result:", class_result)  # Modification here
+        data = json.loads(class_result)
+        subject = data["subject"]
+        event = data["event"]
         ## Info Extraction
-        #context = info_extraction(headline, serper_ai_key)
-        #st.write("Contexto-Fuentes utilizadas:", context)  # Modification here
+        context = info_extraction(headline, serper_ai_key)
+        st.write("Contexto-Fuentes utilizadas:", context)  # Modification here
 		#
         ## Headline Alignment
-        #alignment_result = headline_agent.analyze_alignment(headline=headline, news=news)
-        #st.write("Alineamiento Titular-Noticia:", alignment_result)  # Modification here
-        #data_alignment = json.loads(alignment_result)
-        #alignment_label = data_alignment["label"]
+        alignment_result = headline_agent.analyze_alignment(headline=headline, news=news)
+        st.write("Alineamiento Titular-Noticia:", alignment_result)  # Modification here
+        data_alignment = json.loads(alignment_result)
+        alignment_label = data_alignment["label"]
 		#
         ## Misinformation Campaign Filter
-        #filter_result = filter_agent.run_filter_agent(headline, context)
-        #st.write("Difusion del Titular (times)", filter_result)  # Modification here
-        #filter_data = json.loads(filter_result)
-        #times = filter_data["times"]
+        filter_result = filter_agent.run_filter_agent(headline, context)
+        st.write("Difusion del Titular (times)", filter_result)  # Modification here
+        filter_data = json.loads(filter_result)
+        times = filter_data["times"]
 		#
         ## Decision Making Agent
-        #decision_result = decision_agent.run_decision_agent(news, context, (1-result_pred_proba), alignment_label, times)
+        decision_result = decision_agent.run_decision_agent(news, context, (1-result_pred_proba), alignment_label, times)
 		#
         ## Final decision display
-        #st.write("Decision Final", decision_result)  # Modification here
+        st.write("Decision Final", decision_result)  # Modification here
 
 
 if __name__ == '__main__':
