@@ -54,6 +54,7 @@ def main():
         #st.write(lda_label)
         st.write(f"The news is Fake with probability: {100*result_pred_proba:.2f} %")
         class_result = class_agent.run_class_agent(headline=headline)
+	st.write(headline)
         st.write("Class result:", class_result)  # Modification here
         data = json.loads(class_result)
         subject = data["subject"]
